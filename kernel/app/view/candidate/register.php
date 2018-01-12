@@ -1,6 +1,7 @@
 <div class="ui container">
 <?php
 if(isset($_SESSION['register_finished']) && !$_SESSION['register_finished']){
+    debug($_SESSION);
 ?>
     <form class="ui form" method="post">
         <div id="labelList" class="field">
