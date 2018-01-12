@@ -1,0 +1,91 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: "MS Trebuchet", "ITC Avant Garde Gothic", "MS Arial", "MS Verdana", Univers, Futura, "ITC Stone Sans", "Gill Sans", "Akzidenz Grotesk", Helvetica;
+    box-sizing: border-box;
+}
+html{
+    background: url("../img/k.jpg");
+    background-size:200px;
+}
+body{
+    width:1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+a{
+    color:black;
+    text-decoration:none;
+}
+textarea{
+width:100%;
+resize:none;
+height:120px;
+}
+a:visited{
+    color:black;
+}
+#bandeau{
+    width: 100%;
+    height:200px;
+    background: red;
+	background:url('http://www.lifebox.fr/img/cms/Fotolia_56946121_Subscription_XL.jpg');
+	background-size:100%;
+	background-position:0px 350px;
+    padding: 20px;
+    border-right: solid black 5px;
+    border-left: solid black 5px;
+    border-top: solid black 5px;
+    border-bottom: solid black 0px;
+}
+#contenu{
+    background: lightgray;
+    min-height: 700px;
+    border: solid black 5px;
+
+}
+.blocPrincipal{
+    background: cornflowerblue;
+    width: 70%;
+    margin:2%;
+    padding:10px;
+    border: solid black 5px;
+}
+.blocPrincipal h2{
+    background:limegreen;
+    border: solid black 5px;
+    padding:5px;
+    width:50%;
+}
+.bloc{
+    margin-top:15px;
+    border: solid black 5px;
+    background:yellow;
+    padding:5px;
+	word-wrap: break-word;
+	border-radius:7px;
+}
+.lien:hover{
+    border: solid gray 5px;
+}
+#menu_profil{
+    background: sandybrown;
+    width: 20%;
+    height: 200px;
+    float: right;
+    margin:2%;
+	padding:5px;
+    border: solid black 5px;
+}
+.bouton{
+    background: blueviolet;
+    color: white !important;
+    padding:3px;
+    font-weight: bold;
+    border: solid black 5px;
+	position:relative;
+	top:5px;
+}
+.bouton:hover{
+    background: #7524bf;
+}
