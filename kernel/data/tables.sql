@@ -19,6 +19,14 @@ CREATE TABLE "experience"(
     CONSTRAINT pk_experience PRIMARY KEY (id_experience),
     CONSTRAINT fk_candidate FOREIGN KEY (candidate) REFERENCES candidate(id_candidate)
 );
+CREATE TABLE "formation"(
+    id_formation SERIAL,
+    candidate int NOT NULL,
+    label varchar(100) NOT NULL,
+    CONSTRAINT pk_formation PRIMARY KEY(id_formation),
+    CONSTRAINT fk_candidate FOREIGN KEY (candidate) REFERENCES candidate(id_candidate)
+);
+
 CREATE TABLE "hrm"(
     id_hrm SERIAL,
     username varchar (20) NOT NULL UNIQUE,
@@ -33,3 +41,4 @@ CREATE TABLE "hrm"(
     updated TIMESTAMP WITHOUT TIMEZONE,
     CONSTRAINT pk_drh PRIMARY KEY(id_hrm)
 );
+
