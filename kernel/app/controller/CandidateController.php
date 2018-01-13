@@ -2,7 +2,7 @@
 require_once(LIB."Controller.php");
 class CandidateController extends Controller{
     public function __construct(){
-        $this->models = array("Candidate","Experience","Formation");
+        $this->models = array("Candidate","Experience","Formation","SkillCandidateLevel","Skill","Level");
         parent::__construct();
     }
     public function index(){
@@ -53,8 +53,9 @@ class CandidateController extends Controller{
                 $view = "register_experience";
             }elseif($toDo['formation']) {
                 $view = "register_formation";
-            }
-            else{
+            }elseif($toDo['skill']) {
+                $view = "register_skill";
+            }else{
                 $view = "register_finished";
             }
         }else{
@@ -80,6 +81,12 @@ class CandidateController extends Controller{
                     $toDo['formation'] = true;
                 } else {
                     $toDo['formation'] = false;
+                }
+                $skill = $this->SkillCandidateLevel->readAll('"candidate" = ' . $_SESSION['id_candidate']);
+                if (!$skill) {
+                    $toDo['skill'] = true;
+                } else {
+                    $toDo['skill'] = false;
                 }
             }
         }else{

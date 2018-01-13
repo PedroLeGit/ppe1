@@ -31,7 +31,20 @@ CREATE TABLE "skill"(
     label varchar(100) NOT NULL,
     CONSTRAINT pk_skill PRIMARY KEY(id_skill)
 );
-
+CREATE TABLE "level"(
+    id_level SERIAL,
+    label varchar(100) NOT NULL,
+    CONSTRAINT pk_level PRIMARY KEY(id_level)
+);
+CREATE TABLE "skill_candidate_level"(
+    skill int NOT NULL,
+    candidate int NOT NULL,
+    level int NOT NULL,
+    CONSTRAINT pk_skill_candidate_level PRIMARY KEY(skill,candidate),
+    CONSTRAINT fk1_skill_candidate_level FOREIGN KEY (skill) REFERENCES skill(id_skill),
+    CONSTRAINT fk2_skill_candidate_level FOREIGN KEY (candidate)  REFERENCES candidate(id_candidate),
+    CONSTRAINT fk3_skill_candidate_level FOREIGN KEY (level)  REFERENCES level(id_level)
+);
 
 CREATE TABLE "hrm"(
     id_hrm SERIAL,
