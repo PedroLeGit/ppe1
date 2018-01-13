@@ -6,7 +6,30 @@ class CandidateController extends Controller{
         parent::__construct();
     }
     public function index(){
+        if(empty($_SESSION)){
+            header("Location: ".WEBROOT."candidate/login");
+        }else{
+            if(in_array(true,$this->checkProfile($_SESSION['id_candidate'])));{
+                header("Location: ".WEBROOT."candidate/register");
+            }
+        }
         $this->render("index");
+    }
+    public function login(){
+        if(empty($_SESSION) || !$this->Candidate->read($_SESSION['id_candidate'])) {
+            if ($_POST['username'] && $_POST['password']) {
+                $tmp = $this->Candidate->readAll('"username" = \'' . $_POST['username'] . '\' AND "password" = \'' . sha1($_POST['password']) . '\'');
+                if ($tmp) {
+                    $_SESSION['id_candidate'] = $tmp[0]['id_candidate'];
+                } else {
+                    $data['lastUsername'] = $_POST['username'];
+                    $this->set($data);
+                }
+            }
+        }else{
+            header("Location: ".WEBROOT."candidate");
+        }
+        $this->render("login");
     }
     public function register(){
         //Register the candidate
@@ -59,7 +82,7 @@ class CandidateController extends Controller{
                 $view = "register_finished";
             }
         }else{
-
+            $view = "register_candidate";
         }
         $this->render($view);
     }
