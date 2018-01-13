@@ -2,7 +2,7 @@
 require_once(LIB."Controller.php");
 class CandidateController extends Controller{
     public function __construct(){
-        $this->models = array("Candidate","Experience");
+        $this->models = array("Candidate","Experience","Formation");
         parent::__construct();
     }
     public function index(){
@@ -20,13 +20,28 @@ class CandidateController extends Controller{
                 }
             }
         }
+        if(isset($_SESSION['id_candidate']) && $this->Candidate->read($_SESSION['id_candidate'])) {
+            $testUSerExist = true;
+        }else{
+            $testUSerExist = false;
+        }
         //Add experiences to the candidate
-        if(isset($_POST['nbExp']) && isset($_SESSION['id_candidate']) && $this->Candidate->read($_SESSION['id_candidate'])){
+        if(isset($_POST['nbExp']) && $testUSerExist){
             $this->Experience->setCandidate($_SESSION['id_candidate']);
             for($i = 0;$i <= $_POST['nbExp'];$i++){
                 if(!empty($_POST[$i])) {
                     $this->Experience->setLabel($_POST[$i]);
                     $this->Experience->create();
+                }
+            }
+        }
+        //Add formation to the candidate
+        if(isset($_POST['nbFormation']) && $testUSerExist){
+            $this->Formation->setCandidate($_SESSION['id_candidate']);
+            for($i = 0;$i <= $_POST['nbFormation'];$i++){
+                if(!empty($_POST[$i])) {
+                    $this->Formation->setLabel($_POST[$i]);
+                    $this->Formation->create();
                 }
             }
         }
@@ -36,9 +51,14 @@ class CandidateController extends Controller{
         if($toDo) {
             if ($toDo['exp']) {
                 $view = "register_experience";
+            }elseif($toDo['formation']) {
+                $view = "register_formation";
+            }
+            else{
+                $view = "register_finished";
             }
         }else{
-            $view = "register_candidate";
+
         }
         $this->render($view);
     }
@@ -53,6 +73,13 @@ class CandidateController extends Controller{
                     $toDo['exp'] = true;
                 } else {
                     $toDo['exp'] = false;
+                }
+
+                $formation = $this->Formation->readAll('"candidate" = ' . $_SESSION['id_candidate']);
+                if (!$formation) {
+                    $toDo['formation'] = true;
+                } else {
+                    $toDo['formation'] = false;
                 }
             }
         }else{

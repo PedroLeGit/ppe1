@@ -1,0 +1,1 @@
+<p>Votre inscription est terminée: <a href="<?php echo WEBROOT;?>candidate">cliquez ici</a></p>

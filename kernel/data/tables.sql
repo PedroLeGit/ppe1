@@ -26,6 +26,12 @@ CREATE TABLE "formation"(
     CONSTRAINT pk_formation PRIMARY KEY(id_formation),
     CONSTRAINT fk_candidate FOREIGN KEY (candidate) REFERENCES candidate(id_candidate)
 );
+CREATE TABLE "skill"(
+    id_skill SERIAL,
+    label varchar(100) NOT NULL,
+    CONSTRAINT pk_skill PRIMARY KEY(id_skill)
+);
+
 
 CREATE TABLE "hrm"(
     id_hrm SERIAL,
