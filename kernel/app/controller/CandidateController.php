@@ -6,17 +6,16 @@ class CandidateController extends Controller{
         parent::__construct();
     }
     public function index(){
+        $this->layout = "Candidate";
         if(empty($_SESSION)){
             header("Location: ".WEBROOT."candidate/login");
         }else{
             if(in_array(true,$this->checkProfile($_SESSION['id_candidate']))){
                 header("Location: ".WEBROOT."candidate/register");
             }
-            
-
-
 
         }
+        $this->set(array("action" => "index"));
         $this->render("index");
     }
     public function login(){
@@ -36,6 +35,8 @@ class CandidateController extends Controller{
         $this->render("login");
     }
     public function register(){
+
+        $this->layout = "Register";
         //Register the candidate
         if($_POST['username'] && $_POST['lastname'] && $_POST['firstname'] && $_POST['email'] && $_POST['address'] && $_POST['city'] && $_POST['postalcode'] && $_POST['password']){
             $this->Candidate->postToObj();
@@ -87,10 +88,13 @@ class CandidateController extends Controller{
         $toDo = $this->checkProfile(@$_SESSION['id_candidate']);
         if($toDo) {
             if ($toDo['exp']) {
+                $step = 2;
                 $view = "register_experience";
             }elseif($toDo['formation']) {
+                $step = 3;
                 $view = "register_formation";
             }elseif($toDo['skill']) {
+                $step = 4;
                 $tmp = $this->Level->readAll();
                 foreach ($tmp as $l){
                     $levels[] = array(
@@ -101,12 +105,66 @@ class CandidateController extends Controller{
                 $this->set(array("levels" => $levels));
                 $view = "register_skill";
             }else{
+                $step = 9999;
                 $view = "register_finished";
             }
         }else{
+            $step = 1;
             $view = "register_candidate";
         }
+        $this->set(array("step" => $step));
         $this->render($view);
+    }
+    public function profile(){
+        $this->layout = "Candidate";
+        if(empty($_SESSION)){
+            header("Location: ".WEBROOT."candidate/login");
+        }else{
+            //Formation
+            $formations = $this->Formation->readAll('"candidate" = '.$_SESSION['id_candidate']);
+
+            //Experience
+            $experiences = $this->Experience->readAll('"candidate" = '.$_SESSION['id_candidate']);
+
+
+
+            //Skills
+            $tmp = $this->Level->readAll();
+            $levels = array();
+            foreach($tmp as $l){
+                $levels[$l['id_level']] = ucwords($l['label']);
+            }
+            $userSkills = $this->SkillCandidateLevel->readAll('"candidate" = '.$_SESSION['id_candidate']);
+            $skills = array();
+            foreach($userSkills as $scl){
+                $this->Skill->read($scl['skill']);
+                $skills[] = array(
+                    "level" => $scl['level'],
+                    "skill" => $this->Skill->getAll()
+                );
+            }
+
+
+
+            //Set data
+            $data = array(
+                "levels" => $levels,
+                "skills" => $skills,
+                "formations" => $formations,
+                "experiences" => $experiences
+            );
+            $this->set($data);
+        }
+
+        $this->set(array("action" => "profile"));
+        $this->render("profile");
+    }
+
+    public function logout()
+    {
+        unset($_SESSION);
+        session_destroy();
+        header("Location: " . WEBROOT);
     }
 
 

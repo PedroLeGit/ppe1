@@ -1,5 +1,3 @@
-<div class="ui container">
-    <h1>Inscription</h1>
     <h2>Ajoutez vos experiences</h2>
     <form class="ui form" method="post">
         <div id="labelList" class="field">
@@ -25,5 +23,3 @@
             }
         });
     </script>
-
-</div>

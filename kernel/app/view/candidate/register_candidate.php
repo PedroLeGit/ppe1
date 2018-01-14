@@ -1,5 +1,3 @@
-<div class="ui container">
-    <h1>Inscription</h1>
     <h2>Informations personnelles</h2>
         <form class="ui form" method="post">
             <div class="field">
@@ -57,4 +55,3 @@
             passwordVerif();
         });
     </script>
-</div>

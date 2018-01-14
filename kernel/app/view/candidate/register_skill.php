@@ -1,4 +1,4 @@
-<div class="ui container">
+
     <style>
         .removeskill{
             font-size:40px !important;
@@ -8,7 +8,6 @@
             color:red;
         }
     </style>
-    <h1>Inscription</h1>
     <h2>Ajoutez vos competences</h2>
 
     <div class="ui search">
@@ -91,4 +90,3 @@
             });
         }
     </script>
-</div>
