@@ -21,7 +21,7 @@ class CandidateController extends Controller{
     public function login(){
         if(empty($_SESSION) || !$this->Candidate->read($_SESSION['id_candidate'])) {
             if ($_POST['username'] && $_POST['password']) {
-                $tmp = $this->Candidate->readAll('"username" = \'' . $_POST['username'] . '\' AND "password" = \'' . sha1($_POST['password']) . '\'');
+                $tmp = $this->Candidate->readAll('"username" = \'' . htmlentities(strtolower($_POST['username'])) . '\' AND "password" = \'' . sha1($_POST['password']) . '\'');
                 if ($tmp) {
                     $_SESSION['id_candidate'] = $tmp[0]['id_candidate'];
                 } else {
@@ -41,6 +41,7 @@ class CandidateController extends Controller{
         if($_POST['username'] && $_POST['lastname'] && $_POST['firstname'] && $_POST['email'] && $_POST['address'] && $_POST['city'] && $_POST['postalcode'] && $_POST['password']){
             $this->Candidate->postToObj();
             $this->Candidate->setPassword(sha1($_POST['password']));
+            $this->Candidate->setUsername(htmlentities(strtolower($_POST['username'])));
             if($this->Candidate->create()){
                 $tmp = $this->Candidate->readAll('"username" = \''.$_POST['username'].'\'');
                 if($tmp) {

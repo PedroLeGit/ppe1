@@ -1,8 +1,18 @@
     <h2>Informations personnelles</h2>
+    <style>
+        .usernameOk:after{
+            color:green;
+            content: " Nom d'utilisateur disponible";
+        }
+        .usernameNOk:after{
+            color:red;
+            content: " Nom d'utilisateur indisponible";
+        }
+    </style>
         <form class="ui form" method="post">
             <div class="field">
-                <label>Nom d'utilisateur</label>
-                <input name="username" type="text" required>
+                <label id="usernameLabel">Nom d'utilisateur</label>
+                <input id="username" name="username" type="text" required>
             </div>
             <div class="field">
                 <label>Nom</label>
@@ -40,18 +50,47 @@
         </form>
 
     <script>
+        password = false;
+        username = false;
         function passwordVerif() {
             if ($('#password1').val() == $('#password2').val()) {
-                $("#registerButton").prop("disabled", false);
+                window.password = true;
             } else {
+                window.password = false;
+            }
+        }
+        function checkUsername(username){
+            $.ajax({
+                url: "<?php echo WEBROOT;?>api/candidateUsername/"+username+"/1",
+                success: function(result){
+                    if(result['items'].length== 0){
+                        window.username = true;
+                        $("#usernameLabel").removeClass("usernameNOk");
+                        $("#usernameLabel").addClass("usernameOk");
+                    }else{
+                        window.username = false;
+                        $("#usernameLabel").removeClass("usernameOk");
+                        $("#usernameLabel").addClass("usernameNOk");
+                    }
+                    checkAll();
+                }});
+        }
+        function checkAll(){
+            if(window.password && window.username){
+                $("#registerButton").prop("disabled", false);
+            }else{
                 $("#registerButton").prop("disabled", true);
             }
         }
-
         $("#password1").keyup(function () {
             passwordVerif();
+            checkAll();
         });
         $("#password2").keyup(function () {
             passwordVerif();
+            checkAll();
+        });
+        $("#username").keyup(function () {
+            checkUsername($(this).val());
         });
     </script>
