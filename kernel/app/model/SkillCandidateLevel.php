@@ -8,7 +8,7 @@ class SkillCandidateLevel extends Model
 
     public function __construct()
     {
-        parent::__construct("candidate_skill_level", array("skill","candidate"));
+        parent::__construct("skill_candidate_level", array("skill","candidate"));
         $this->skill = null;
         $this->candidate = null;
         $this->level = null;

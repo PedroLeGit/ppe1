@@ -9,9 +9,13 @@ class CandidateController extends Controller{
         if(empty($_SESSION)){
             header("Location: ".WEBROOT."candidate/login");
         }else{
-            if(in_array(true,$this->checkProfile($_SESSION['id_candidate'])));{
+            if(in_array(true,$this->checkProfile($_SESSION['id_candidate']))){
                 header("Location: ".WEBROOT."candidate/register");
             }
+            
+
+
+
         }
         $this->render("index");
     }
@@ -68,7 +72,17 @@ class CandidateController extends Controller{
                 }
             }
         }
-
+        //Add skills to the candidate
+        if(isset($_POST['nbSkill']) && $testUSerExist){
+            $this->SkillCandidateLevel->setCandidate($_SESSION['id_candidate']);
+            for($i = 1;$i <= $_POST['nbSkill'];$i++){
+                if(!empty($_POST["skillId".$i]) && !empty($_POST["levelId".$i])) {
+                    $this->SkillCandidateLevel->setSkill($_POST["skillId".$i]);
+                    $this->SkillCandidateLevel->setLevel($_POST["levelId".$i]);
+                    $this->SkillCandidateLevel->create();
+                }
+            }
+        }
         //Choose the view
         $toDo = $this->checkProfile(@$_SESSION['id_candidate']);
         if($toDo) {
@@ -77,6 +91,14 @@ class CandidateController extends Controller{
             }elseif($toDo['formation']) {
                 $view = "register_formation";
             }elseif($toDo['skill']) {
+                $tmp = $this->Level->readAll();
+                foreach ($tmp as $l){
+                    $levels[] = array(
+                        "id_level" => $l['id_level'],
+                        "label" => ucwords($l['label'])
+                    );
+                }
+                $this->set(array("levels" => $levels));
                 $view = "register_skill";
             }else{
                 $view = "register_finished";
