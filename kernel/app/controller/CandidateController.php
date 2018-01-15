@@ -24,6 +24,7 @@ class CandidateController extends Controller{
                 $tmp = $this->Candidate->readAll('"username" = \'' . htmlentities(strtolower($_POST['username'])) . '\' AND "password" = \'' . sha1($_POST['password']) . '\'');
                 if ($tmp) {
                     $_SESSION['id_candidate'] = $tmp[0]['id_candidate'];
+                    header("Location: ".WEBROOT."candidate");
                 } else {
                     $data['lastUsername'] = $_POST['username'];
                     $this->set($data);
@@ -121,39 +122,44 @@ class CandidateController extends Controller{
         if(empty($_SESSION)){
             header("Location: ".WEBROOT."candidate/login");
         }else{
-            //Formation
-            $formations = $this->Formation->readAll('"candidate" = '.$_SESSION['id_candidate']);
+            if($this->Candidate->read($_SESSION['id_candidate'])) {
+                //User info
+                $user = $this->Candidate->getAll();
+                //Formation
+                $formations = $this->Formation->readAll('"candidate" = ' . $_SESSION['id_candidate']);
 
-            //Experience
-            $experiences = $this->Experience->readAll('"candidate" = '.$_SESSION['id_candidate']);
+                //Experience
+                $experiences = $this->Experience->readAll('"candidate" = ' . $_SESSION['id_candidate']);
 
 
+                //Skills
+                $tmp = $this->Level->readAll();
+                $levels = array();
+                foreach ($tmp as $l) {
+                    $levels[$l['id_level']] = ucwords($l['label']);
+                }
+                $userSkills = $this->SkillCandidateLevel->readAll('"candidate" = ' . $_SESSION['id_candidate']);
+                $skills = array();
+                foreach ($userSkills as $scl) {
+                    $this->Skill->read($scl['skill']);
+                    $skills[] = array(
+                        "level" => $scl['level'],
+                        "skill" => $this->Skill->getAll()
+                    );
+                }
 
-            //Skills
-            $tmp = $this->Level->readAll();
-            $levels = array();
-            foreach($tmp as $l){
-                $levels[$l['id_level']] = ucwords($l['label']);
-            }
-            $userSkills = $this->SkillCandidateLevel->readAll('"candidate" = '.$_SESSION['id_candidate']);
-            $skills = array();
-            foreach($userSkills as $scl){
-                $this->Skill->read($scl['skill']);
-                $skills[] = array(
-                    "level" => $scl['level'],
-                    "skill" => $this->Skill->getAll()
+
+                //Set data
+                $data = array(
+                    "levels" => $levels,
+                    "skills" => $skills,
+                    "formations" => $formations,
+                    "experiences" => $experiences,
+                    "user" => $user
                 );
+            }else{
+                header("Location: ".WEBROOT."candidate/logout");
             }
-
-
-
-            //Set data
-            $data = array(
-                "levels" => $levels,
-                "skills" => $skills,
-                "formations" => $formations,
-                "experiences" => $experiences
-            );
             $this->set($data);
         }
 

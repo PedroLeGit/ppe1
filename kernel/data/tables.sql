@@ -8,8 +8,8 @@ CREATE TABLE "candidate"(
     postalcode varchar(5) NOT NULL,
     username varchar (20) NOT NULL UNIQUE,
     password varchar(250) NOT NULL,
-    created TIMESTAMP WITHOUT TIMEZONE,
-    updated TIMESTAMP WITHOUT TIMEZONE,
+    created TIMESTAMP WITHOUT TIME ZONE,
+    updated TIMESTAMP WITHOUT TIME ZONE,
     CONSTRAINT pk_candidate PRIMARY KEY(id_candidate)
 );
 CREATE TABLE "experience"(

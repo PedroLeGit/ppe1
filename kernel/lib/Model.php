@@ -32,16 +32,20 @@ abstract class Model extends DB{
 			}
         }
         if(isset($this->created)){
-            $varKey[] = "created";
+            if(!in_array("created",$varKey)) {
+                $varKey[] = "created";
+            }
             $varValue[":created"] = date('Y-m-d H:i:s');
         }
-        if(isset($this->modified)){
-            $varKey[] = "modified";
-            $varValue[":modified"] = date('Y-m-d H:i:s');
+        if(isset($this->updated)){
+		    if(!in_array("updated",$varKey)) {
+                $varKey[] = "updated";
+            }
+            $varValue[":updated"] = date('Y-m-d H:i:s');
         }
 		$req = "INSERT INTO \"$this->table\" (\"".implode("\",\"",$varKey)."\") VALUES (:".implode(",:",$varKey).")";
 //		foreach($varValue as $k => $v){
-//		    $req = str_replace($k,$v,$req);
+//		    $req = str_replace($k,"'".$v."'",$req);
 //        }
 //		echo $req;
         $this->connect();

@@ -11,7 +11,7 @@ class Candidate extends Model {
     protected $postalcode;
     protected $password;
     protected $created;
-    protected $modified;
+    protected $updated;
     public function __construct(){
         parent::__construct("candidate","id_candidate");
 		$this->id_candidate = null;
@@ -23,8 +23,8 @@ class Candidate extends Model {
 		$this->city = "";
 		$this->postalcode = "";
 		$this->password = "";
-		$this->created = null;
-		$this->modified = null;
+		$this->created = "";
+		$this->updated = "";
     }
 
     /**
