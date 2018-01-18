@@ -1,5 +1,3 @@
-<?php $errors = array(); ?>
-
 <h1>Creer un Chef de service</h1>
 <br />
 
@@ -31,7 +29,7 @@
         </div>
         <div class="field">
             <label for="">Code Postal</label>
-            <input type="text" name="pc" required/>
+            <input type="text" name="postalcode" required/>
         </div>
         <div class="field">
             <label for="">Mot de passe par defaut pour Chef de Service</label>

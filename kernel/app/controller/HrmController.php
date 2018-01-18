@@ -25,31 +25,18 @@ class HrmController extends Controller{
         }
 
         public function createhrm(){
-//            $errors = array();
-//            if(!empty($errors)): ?>
-<!--                <div>-->
-<!--                    <p>Formulaire incomplet</p>-->
-<!--                        <ul>-->
-<!--                            --><?php //foreach($errors as $key): ?>
-<!--                                <li>--><?//= $key; ?><!--</li>-->
-<!--                            --><?php //endforeach; ?>
-<!--                        </ul>-->
-<!--                </div>-->
-<!--            --><?php //endif;
-
             if(!empty($_POST)){
-                if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['mail']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['pc']) && !empty($_POST['password'])){
+                if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['mail']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
                     $this->Hrm->postToObj();
                     $this->Hrm->setPassword(sha1($_POST['password']));
                     $this->Hrm->setUsername(htmlentities(strtolower($_POST['username'])));
                 }
-                if($this->Hrm->create()){//permet de recuperer le nom de l'utilisateur
-                    $tmp = $this->Hrm->readAll('"username" = \''.$_POST['username'].'\'');
-                    if($tmp) {
-                        $_SESSION['id_hrm'] = $tmp[0]['id_hrm'];
-                    }
-                }
+                header("Location: la ou j'ai envie");
+                exit();
             }
+        }
 
+        public function checkoffer(){
+            echo "absolument aucune idee de quoi trouver ici en script";
         }
 }

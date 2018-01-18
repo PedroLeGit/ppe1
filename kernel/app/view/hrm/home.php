@@ -1,3 +1,3 @@
 Menu <br />
-<a href="createhrm.php"> Creer chef de service</a> <br/>
-<a> Verifier nouvelles offres</a>
+<a href="<?php echo WEBROOT; ?>createhrm"> Creer compte CDS</a> <br/>
+<a href="<?php echo WEBROOT; ?>checkoffer""> Consulter offres</a>
