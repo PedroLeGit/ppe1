@@ -24,16 +24,16 @@ class HrmController extends Controller{
             $this->render("home");
         }
 
-        public function createhrm(){
+        public function createsm(){
             if(!empty($_POST)){
                 if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['mail']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
                     $this->Hrm->postToObj();
                     $this->Hrm->setPassword(sha1($_POST['password']));
                     $this->Hrm->setUsername(htmlentities(strtolower($_POST['username'])));
                 }
-                header("Location: la ou j'ai envie");
                 exit();
             }
+            $this->render(createsm);
         }
 
         public function checkoffer(){
