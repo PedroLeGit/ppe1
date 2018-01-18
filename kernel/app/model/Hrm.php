@@ -12,7 +12,7 @@ class Hrm extends Model {
     protected $password;
     public function __construct(){
         parent::__construct("candidate","id_candidate");
-        $this->id_candidate = null;
+        $this->id_hrm = null;
         $this->username = "";
         $this->firstname = "";
         $this->lastname = "";
@@ -42,17 +42,17 @@ class Hrm extends Model {
     /**
      * @return null
      */
-    public function getIdCandidate()
+    public function getIdHrm()
     {
-        return $this->id_candidate;
+        return $this->id_hrm;
     }
 
     /**
-     * @param null $id_candidate
+     * @param null $id_hrm
      */
-    public function setIdCandidate($id_candidate)
+    public function setIdHrm($id_hrm)
     {
-        $this->id_candidate = $id_candidate;
+        $this->id_hrm = $id_hrm;
     }
 
     /**
