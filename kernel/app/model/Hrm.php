@@ -10,7 +10,7 @@ class Hrm extends Model {
     protected $city;
     protected $postalcode;
     protected $password;
-    
+
     public function __construct(){
         parent::__construct("hrm","id_hrm");
         $this->id_hrm = null;

@@ -39,7 +39,15 @@ class HrmController extends Controller{
 
             if(!empty($_POST)){
                 if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['mail']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['pc']) && !empty($_POST['password'])){
-
+                    $this->Hrm->postToObj();
+                    $this->Hrm->setPassword(sha1($_POST['password']));
+                    $this->Hrm->setUsername(htmlentities(strtolower($_POST['username'])));
+                }
+                if($this->Hrm->create()){//permet de recuperer le nom de l'utilisateur
+                    $tmp = $this->Hrm->readAll('"username" = \''.$_POST['username'].'\'');
+                    if($tmp) {
+                        $_SESSION['id_hrm'] = $tmp[0]['id_hrm'];
+                    }
                 }
             }
 
