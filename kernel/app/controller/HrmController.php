@@ -6,27 +6,42 @@ class HrmController extends Controller{
         parent::__construct();
     }
 
-    function logged_only()
-    {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-    }
-
 
     public function index(){
-        if (!empty($_POST())){
+        if (!empty($_POST)){
             if(!empty($_POST['username']) && !empty($_POST['password'])){
                 $this->Hrm->readAll("username = 'pedro' password = 't'" );
-                    $_SESSION['flash']['success'] = "Vous etes maintenant connectes au site";
-                    header('Location: home.php');
+                    header('Location: ' . WEBROOT. 'hrm/home');
                     exit();
                 }else{
-                    $_SESSION['flash']['danger'] = "Identifiant ou mot de passe incorrect";
+                    $this->set(array("error" => "Identifiants non reconnus"));
                 }
-                session_start();
-            }else {
-                $this->render("login");
             }
+        $this->render("login");
+        }
+
+        public function home(){
+            $this->render("home");
+        }
+
+        public function createhrm(){
+//            $errors = array();
+//            if(!empty($errors)): ?>
+<!--                <div>-->
+<!--                    <p>Formulaire incomplet</p>-->
+<!--                        <ul>-->
+<!--                            --><?php //foreach($errors as $key): ?>
+<!--                                <li>--><?//= $key; ?><!--</li>-->
+<!--                            --><?php //endforeach; ?>
+<!--                        </ul>-->
+<!--                </div>-->
+<!--            --><?php //endif;
+
+            if(!empty($_POST)){
+                if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['mail']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['pc']) && !empty($_POST['password'])){
+
+                }
+            }
+
         }
 }

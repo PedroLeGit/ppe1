@@ -1,8 +1,7 @@
 <?php
-if(!empty($_POST)){
-    debug($_POST);
+if(isset($error)){
+    echo $error;
 }
-
 ?>
 
 <div class="ui container">

@@ -1,7 +1,14 @@
 <?php
-require_once(LIB."Model.php");
-class Hrm extends Model {
-    protected $id_hrm;
+/**
+ * Created by PhpStorm.
+ * User: pplaud
+ * Date: 18/01/2018
+ * Time: 11:39
+ */
+
+class Smbd extends Model
+{
+    protected $id_sm;
     protected $username;
     protected $firstname;
     protected $lastname;
@@ -10,10 +17,12 @@ class Hrm extends Model {
     protected $city;
     protected $postalcode;
     protected $password;
-    
+    protected $created;
+    protected $updated;
+
     public function __construct(){
-        parent::__construct("hrm","id_hrm");
-        $this->id_hrm = null;
+        parent::__construct("sm","id_sm");
+        $this->id_sm = null;
         $this->username = "";
         $this->firstname = "";
         $this->lastname = "";
@@ -22,6 +31,8 @@ class Hrm extends Model {
         $this->city = "";
         $this->postalcode = "";
         $this->password = "";
+        $this->created = "";
+        $this->updated = "";
     }
 
 
@@ -29,16 +40,16 @@ class Hrm extends Model {
     /**
      * @return null
      */
-    public function getIdHrm()
+    public function getIdSm()
     {
-        return $this->id_hrm;
+        return $this->id_sm;
     }
     /**
-     * @param null $id_hrm
+     * @param null $id_sm
      */
-    public function setIdHrm($id_hrm)
+    public function setIdSm($id_sm)
     {
-        $this->id_hrm = $id_hrm;
+        $this->id_sm = $id_sm;
     }
 
     /**
@@ -48,7 +59,6 @@ class Hrm extends Model {
     {
         return $this->username;
     }
-
     /**
      * @param mixed $username
      */
@@ -57,14 +67,14 @@ class Hrm extends Model {
         $this->username = $username;
     }
 
+
     /**
-     * @return string
+     * @return mixed
      */
     public function getFirstname()
     {
         return $this->firstname;
     }
-
     /**
      * @param string $firstname
      */
@@ -80,7 +90,6 @@ class Hrm extends Model {
     {
         return $this->lastname;
     }
-
     /**
      * @param mixed $lastname
      */
@@ -96,7 +105,6 @@ class Hrm extends Model {
     {
         return $this->email;
     }
-
     /**
      * @param string $email
      */
@@ -112,7 +120,6 @@ class Hrm extends Model {
     {
         return $this->address;
     }
-
     /**
      * @param string $address
      */
@@ -128,7 +135,6 @@ class Hrm extends Model {
     {
         return $this->city;
     }
-
     /**
      * @param string $city
      */
@@ -144,7 +150,6 @@ class Hrm extends Model {
     {
         return $this->postalcode;
     }
-
     /**
      * @param string $postalcode
      */
@@ -160,7 +165,6 @@ class Hrm extends Model {
     {
         return $this->password;
     }
-
     /**
      * @param string $password
      */
@@ -168,7 +172,4 @@ class Hrm extends Model {
     {
         $this->password = $password;
     }
-
-
-
 }
