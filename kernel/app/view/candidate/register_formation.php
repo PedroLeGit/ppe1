@@ -13,7 +13,6 @@
         $( "#addLabel" ).click(function() {
             var nb = $( "#nbFormation" ).val();
             var text = $( "input[name='"+nb+"']").val();
-            console.log(nb+text);
             if(text != ""){
                 var newnb = parseInt(nb)+1;
                 $( "#labelList" ).append('<div class="field">\n' +

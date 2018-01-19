@@ -5,7 +5,7 @@ class ApiController extends Controller
     public function __construct()
     {
         $this->layout = "Json";
-        $this->models = array("Skill", "Level","Candidate");
+        $this->models = array("Skill", "Level","Candidate","Experience");
         parent::__construct();
     }
     public function index(){
@@ -44,6 +44,34 @@ class ApiController extends Controller
                 $res['items'] = array();
             }
             $this->set(array("json" => json_encode($res)));
+            $this->render("json");
+        }
+    }
+    public function candidate($id = null){
+        if($id){
+            if($this->Candidate->read($id)) {
+                if($_POST['firstname'] && $_POST['lastname'] && $_POST['email'] && $_POST['address'] && $_POST['city'] && $_POST['postalcode']){
+                    $this->Candidate->postToObj();
+                    $this->Candidate->update();
+                }
+
+                $tmp = $this->Candidate->getAll();
+                unset($tmp['password']);
+            }else{
+                $res = array();
+            }
+            $this->set(array("json" => json_encode($tmp)));
+            $this->render("json");
+        }
+    }
+    public function experience($id = null){
+        if($id){
+            if($tmp = $this->Experience->readAll("candidate = ".$id)) {
+                $res = $tmp;
+            }else{
+                $res = array();
+            }
+            $this->set(array("json" => json_encode($tmp)));
             $this->render("json");
         }
     }

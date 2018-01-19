@@ -8,22 +8,23 @@
     <title><?php if(!$metaTitle){echo "Recrutement";}else{echo $metaTitle;}?></title>
 </head>
 <body>
-<div class="ui secondary pointing menu">
-    <a href="<?php echo WEBROOT;?>candidate"class="<?php if($action == "index"){echo "active";}?> item">
-        Home
-    </a>
-    <a href="<?php echo WEBROOT;?>candidate/profile" class="<?php if($action == "profile"){echo "active";}?> item">
-        Mon profil
-    </a>
-    <a class="item">
-        Les offres
-    </a>
-    <div class="right menu">
-        <a href="<?php echo WEBROOT;?>candidate/logout" class="ui item">
-            Deconnexion
+    <div class="ui secondary pointing menu">
+        <a href="<?php echo WEBROOT;?>candidate"class="<?php if($action == "index"){echo "active";}?> item">
+            Home
         </a>
+        <a href="<?php echo WEBROOT;?>candidate/profile" class="<?php if($action == "profile"){echo "active";}?> item">
+            Mon profil
+        </a>
+        <a class="item">
+            Les offres
+        </a>
+        <div class="right menu">
+            <a href="<?php echo WEBROOT;?>candidate/logout" class="ui item">
+                Deconnexion
+            </a>
+        </div>
     </div>
-</div>
-<?php echo $content_for_layout; ?>
+    <noscript>Veuillez activer JavaScript</noscript>
+    <?php echo $content_for_layout; ?>
 </body>
 </html>

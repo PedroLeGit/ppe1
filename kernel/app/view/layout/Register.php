@@ -9,7 +9,6 @@
 </head>
 <body>
     <div class="ui container">
-
         <h1>Inscription</h1>
         <div class="ui ordered steps">
             <div class="<?php if($step == 1){ echo "active";}elseif($step > 1){echo "completed";} ?> step">
@@ -33,7 +32,7 @@
                 </div>
             </div>
         </div>
-
+        <noscript>Veuillez activer JavaScript</noscript>
         <?php echo $content_for_layout; ?>
     </div>
 </body>

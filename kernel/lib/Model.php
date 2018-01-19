@@ -7,7 +7,7 @@ abstract class Model extends DB{
 	private $defaultOrder;
 	protected $belongTo = array();
 	protected $primarySerial = true;
-	
+
 	public function __construct($table,$primaryKey){
 		$this->table = $table;
 		$this->primaryKey = $primaryKey;
@@ -74,19 +74,22 @@ abstract class Model extends DB{
             $varKey[] = "modified";
             $varVals[":modified"] = date('Y-m-d H:i:s');
         }
-        if(is_array($id) && count($id) == count($this->primaryKey)){
+        if(is_array($id) && count($id) == count( $id)){
             $i = 0;
             foreach($id as $a){
-                $varPrimary[] = "\"".$this->primaryKey[$i]."\"=:".$this->primaryKey[$i];
-                $varVals[":".$this->primaryKey[$i]] = $a;
+                $varPrimary[] = "\"". $a."\"=:". $a;
+                $varVals[":". $a] = $this->$a;
                 $i++;
             }
         }else{
-            $varTabs[] = "\"$this->primaryKey\"=:$this->primaryKey";
-            $varVals[":".$this->primaryKey] = $id;
+            $varPrimary[] = "\"".$id."\"=:".$id;
+            $varVals[":".$id] = $this->$id;
         }
-
 		$req = $req.implode(",",$varTabs)." WHERE ".implode(" AND ",$varPrimary);
+//		foreach($varVals as $k => $v){
+//		    $req = str_replace($k,"'".$v."'",$req);
+//        }
+//		echo $req;
 		$this->connect();
 		$res = $this->db->prepare($req);
 		$res->execute($varVals);

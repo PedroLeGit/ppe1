@@ -8,6 +8,7 @@
         <title><?php if(!$metaTitle){echo "Recrutement";}else{echo $metaTitle;}?></title>
     </head>
     <body>
+        <noscript>Veuillez activer JavaScript</noscript>
         <?php echo $content_for_layout; ?>
     </body>
 </html>
