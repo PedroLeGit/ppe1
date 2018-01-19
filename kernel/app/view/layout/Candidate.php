@@ -13,7 +13,7 @@
             Home
         </a>
         <a href="<?php echo WEBROOT;?>candidate/profile" class="<?php if($action == "profile"){echo "active";}?> item">
-            Mon profil
+            Mon profil j'ai besoin d'aide
         </a>
         <a class="item">
             Les offres

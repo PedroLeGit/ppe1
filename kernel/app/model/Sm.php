@@ -6,7 +6,7 @@
  * Time: 11:39
  */
 
-class Smbd extends Model
+class Sm extends Model
 {
     protected $id_sm;
     protected $username;
@@ -16,6 +16,7 @@ class Smbd extends Model
     protected $address;
     protected $city;
     protected $postalcode;
+    protected $department;
     protected $password;
     protected $created;
     protected $updated;
@@ -30,6 +31,7 @@ class Smbd extends Model
         $this->address = "";
         $this->city = "";
         $this->postalcode = "";
+        $this->department = "";
         $this->password = "";
         $this->created = "";
         $this->updated = "";
@@ -156,6 +158,21 @@ class Smbd extends Model
     public function setPostalcode($postalcode)
     {
         $this->postalcode = $postalcode;
+    }
+
+  /**
+     * @return string
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+    /**
+     * @param string $department
+     */
+    public function setDepartment($department)
+    {
+        $this->department = $department;
     }
 
     /**

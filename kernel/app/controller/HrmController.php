@@ -2,7 +2,8 @@
 require_once(LIB."Controller.php");
 class HrmController extends Controller{
     public function __construct(){
-        $this->models = array("Hrm");
+        $this->models = array("Hrm", "Sm");
+
         parent::__construct();
     }
 
@@ -26,11 +27,16 @@ class HrmController extends Controller{
 
         public function createsm(){
             if(!empty($_POST)){
-                if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['mail']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
-                    $this->Hrm->postToObj();
-                    $this->Hrm->setPassword(sha1($_POST['password']));
-                    $this->Hrm->setUsername(htmlentities(strtolower($_POST['username'])));
-                    $this->Hrm->create();
+                if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['email']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['department']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
+                    echo "1";
+                    $this->Sm->postToObj();
+                    echo "2";
+                    $this->Sm->setPassword(sha1($_POST['password']));
+                    echo "3";
+                    $this->Sm->create();
+                    echo "4";
+                    $this->Sm->readAll();
+                    echo "5";
                 }
             }
             $this->render(createsm);

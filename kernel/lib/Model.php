@@ -44,10 +44,10 @@ abstract class Model extends DB{
             $varValue[":updated"] = date('Y-m-d H:i:s');
         }
 		$req = "INSERT INTO \"$this->table\" (\"".implode("\",\"",$varKey)."\") VALUES (:".implode(",:",$varKey).")";
-//		foreach($varValue as $k => $v){
-//		    $req = str_replace($k,"'".$v."'",$req);
-//        }
-//		echo $req;
+		foreach($varValue as $k => $v){
+		    $req = str_replace($k,"'".$v."'",$req);
+        }
+		echo $req;
         $this->connect();
 		$res = $this->db->prepare($req);
 		$bool = $res->execute($varValue);

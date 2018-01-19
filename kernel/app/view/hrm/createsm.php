@@ -17,11 +17,11 @@
         </div>
         <div class="field">
             <label for="">Email</label>
-            <input type="email" name="mail"  required/>
+            <input type="email" name="email"  required/>
         </div>
         <div class="field">
             <label for="">Adresse</label>
-            <input type="text" name="adress" required/>
+            <input type="text" name="address" required/>
         </div>
         <div class="field">
             <label for="">Ville</label>
@@ -29,15 +29,19 @@
         </div>
         <div class="field">
             <label for="">Code Postal</label>
-            <input type="text" name="postalcode" required/>
+            <input type="number" name="postalcode" required/>
+        </div>
+        <div class="field">
+            <label for="">Service</label>
+            <input type="text" name="department" required/>
         </div>
         <div class="field">
             <label for="">Mot de passe par defaut pour Chef de Service</label>
-            <input type="password" name="password" required/>
+            <input id="password1" type="password" name="password" required/>
         </div>
         <div class="field">
             <label for="">Confirmez ce mot de passe</label>
-            <input type="password" name="password_confirm" required/>
+            <input id="password2" type="password" required/>
         </div>
         <button type="submit" class="ui button">Valider creation</button> <p>Tous les champs sont requis</p>
     </form>
