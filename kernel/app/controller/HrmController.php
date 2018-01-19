@@ -30,13 +30,23 @@ class HrmController extends Controller{
                     $this->Hrm->postToObj();
                     $this->Hrm->setPassword(sha1($_POST['password']));
                     $this->Hrm->setUsername(htmlentities(strtolower($_POST['username'])));
+                    $this->Hrm->create();
                 }
-                exit();
             }
             $this->render(createsm);
         }
 
         public function checkoffer(){
             echo "absolument aucune idee de quoi trouver ici en script";
+        }
+
+        public function deletesm(){
+            echo "Suppression des Chefs de Service";
+        }
+
+        public function logout(){
+            unset($_SESSION);
+            session_destroy();
+            $this->render(login);
         }
 }

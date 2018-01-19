@@ -61,3 +61,28 @@ CREATE TABLE "hrm"(
     CONSTRAINT pk_drh PRIMARY KEY(id_hrm)
 );
 
+CREATE TABLE "department"(
+    id_department SERIAL,
+    label varchar(100) NOT NULL,
+    staff int NOT NULL,
+    CONSTRAINT pk_department PRIMARY KEY (id_department)
+);
+
+CREATE TABLE "sm"(
+    id_sm SERIAL,
+    username varchar (20) NOT NULL UNIQUE,
+    password varchar(250) NOT NULL,
+    firstname varchar(20) NOT NULL,
+    lastname varchar(20) NOT NULL,
+    email varchar(70) NOT NULL,
+    address varchar(100) NOT NULL,
+    city varchar(50) NOT NULL,
+    postalcode varchar(5) NOT NULL,
+    created TIMESTAMP WITHOUT TIMEZONE,
+    updated TIMESTAMP WITHOUT TIMEZONE,
+    department int NOT NULL,
+    CONSTRAINT pk_sm PRIMARY KEY(id_sm),
+    CONSTRAINT fk_sm1 FOREIGN KEY (department) REFERENCES department(id_department)
+);
+
+
