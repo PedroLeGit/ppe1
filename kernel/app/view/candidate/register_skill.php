@@ -15,7 +15,7 @@
             <input id="search" class="prompt" type="text">
         </div>
     </div><br />
-    <form class="ui form" method="POST">
+    <form class="ui form" method="POST" action="<?php echo WEBROOT;?>candidate/register">
         <div id="skills" class="field">
 
         </div>

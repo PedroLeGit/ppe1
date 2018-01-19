@@ -1,5 +1,5 @@
     <h2>Ajoutez vos experiences</h2>
-    <form class="ui form" method="post">
+    <form class="ui form" method="post" action="<?php echo WEBROOT;?>candidate/register">
         <div id="labelList" class="field">
             <div class="field">
                 <input name="0" type="text" maxlength="100">

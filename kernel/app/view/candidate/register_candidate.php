@@ -9,7 +9,7 @@
             content: " Nom d'utilisateur indisponible";
         }
     </style>
-        <form class="ui form" method="post">
+        <form class="ui form" method="post" action="<?php echo WEBROOT;?>candidate/register">
             <div class="field">
                 <label id="usernameLabel">Nom d'utilisateur</label>
                 <input id="username" name="username" type="text" required>

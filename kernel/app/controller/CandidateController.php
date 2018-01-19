@@ -7,16 +7,19 @@ class CandidateController extends Controller{
     }
     public function index(){
         $this->layout = "Candidate";
+        $view = "index";
         if(empty($_SESSION)){
-            header("Location: ".WEBROOT."candidate/login");
+            $this->layout = "Default";
+           $view = "login";
         }else{
             if(in_array(true,$this->checkProfile($_SESSION['id_candidate']))){
-                header("Location: ".WEBROOT."candidate/register");
+                $this->register();
+                die();
             }
 
         }
         $this->set(array("action" => "index"));
-        $this->render("index");
+        $this->render($view);
     }
     public function login(){
         if(empty($_SESSION) || !$this->Candidate->read($_SESSION['id_candidate'])) {
@@ -171,7 +174,7 @@ class CandidateController extends Controller{
     {
         unset($_SESSION);
         session_destroy();
-        header("Location: " . WEBROOT);
+        $this->render("login");
     }
 
 

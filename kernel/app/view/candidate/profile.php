@@ -11,10 +11,10 @@
                 Nom d'utilisateur : <span id="username"><?php echo $user['username'];?></span>
             </div>
             <div class="content">
-                Nom : <span id="firstname"><?php echo $user['lastname'];?></span>
+                Nom : <span id="lastname"><?php echo $user['lastname'];?></span>
             </div>
             <div class="content">
-                Prenom : <span id="lastname"><?php echo $user['firstname'];?></span>
+                Prenom : <span id="firstname"><?php echo $user['firstname'];?></span>
             </div>
             <div class="content">
                 Adresse mail : <span id="email"><?php echo $user['email'];?></span>
@@ -43,16 +43,22 @@
             foreach($experiences as $experience){
 
                 ?>
-                <div class="content">
-                    <?php echo ucfirst($experience['label']);?>
+                <div class="content ui form">
+                    <span class="fields">
+                        <span class="twelve wide field" id="exp<?php echo $experience['id_experience'];?>">
+                            <?php echo $experience['label'];?>
+                        </span>
+                        <button  data-id="<?php echo $experience['id_experience'];?>" class="two wide field edit-exp ui icon button" tabindex="0">
+                            <i id="exp-icon1-<?php echo $experience['id_experience'];?>" class="edit icon"></i>
+                        </button >
+                        <button  data-id="<?php echo $experience['id_experience'];?>" class="two wide field cancel-exp ui icon button" tabindex="0">
+                            <i id="exp-icon2-<?php echo $experience['id_experience'];?>" class="trash icon"></i>
+                        </button>
+                    </span>
                 </div>
                 <?php
             }
             ?>
-            <div id="edit-exp" class="ui bottom attached button">
-                <i class="edit icon"></i>
-                Editer
-            </div>
         </div>
 
 
@@ -133,7 +139,7 @@
             </div>
             <div class="field">
                 <label>Code postal</label>
-                <input name="postalcode" type="text" value="<?php echo $user['postalcode'];?>"required>
+                <input name="postalcode" type="text" value="<?php echo $user['postalcode'];?>" required>
             </div>
         </form>
     </div>
@@ -147,10 +153,7 @@
     <div class="header">Modifier vos information personnelles</div>
     <div class="scrolling content">
         <form class="ui form" method="post">
-            <div id="labelList" class="field">
-                <div class="field">
-                    <input name="0" type="text" maxlength="100">
-                </div>
+            <div id="labelListExp" class="field">
             </div>
             <input name="nbExp" id="nbExp" type="hidden" value="0" >
             <button id="addLabelExp" type="button" class="ui inverted green button">+</button>
@@ -205,38 +208,63 @@
                 $("#postalcode").html(result['postalcode']);
             }});
     }
-
-
-    $("#edit-exp").click(function () {
-        getExpInfo();
-    });
-    function showEditExp() {
-        $('#exp.ui.longer.modal').modal('show');
-    }
-    function getExpInfo(){
-        $.ajax({
-            url: "<?php echo WEBROOT;?>api/experience/<?php echo $_SESSION['id_candidate'];?>",
-            success: function(result){
-                if(result.length!= 0){
-                    showEditExp();
-                }else{
-
-                }
-            }});
-    }
-    function showEditUser() {
-        $('#user.ui.longer.modal').modal('show');
-    }
-
-    $( "#addLabelExp" ).click(function() {
-        var nb = $( "#nbExp" ).val();
-        var text = $( "input[name='"+nb+"']").val();
-        if(text != ""){
-            var newnb = parseInt(nb)+1;
-            $( "#labelList" ).append('<div class="field">\n' +
-                '                <input name="'+newnb+'" type="text" maxlength="100">\n' +
-                '            </div>');
-            $( "#nbExp" ).val(newnb);
+    $(".edit-exp").click(function () {
+        id = $(this).data('id');
+        if($('#exp'+id).has("input").length != 0){
+            saveExpInfo(id)
+        }else{
+            getExpInfo(id);
         }
     });
+    $(".cancel-exp").click(function () {
+        id = $(this).data('id');
+        if($('#exp'+id).has("input").length != 0){
+            cancelExpInfo(id);
+        }else{
+
+        }
+    });
+
+    function cancelExpInfo(id){
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/experienceById/"+id,
+            success: function(result){
+                $('#exp'+result['id_experience']).html(result['label']);
+                $('#exp-icon1-'+result['id_experience']).removeClass("save");
+                $('#exp-icon1-'+result['id_experience']).addClass("edit");
+
+                $('#exp-icon2-'+result['id_experience']).removeClass("undo");
+                $('#exp-icon2-'+result['id_experience']).addClass("trash");
+            }
+        });
+    }
+    function getExpInfo(id){
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/experienceById/"+id,
+            success: function(result){
+                $('#exp'+result['id_experience']).html("<input id='exp-input-"+result['id_experience']+"' type='text' value='"+result['label']+"' />");
+                $('#exp-icon1-'+result['id_experience']).removeClass("edit");
+                $('#exp-icon1-'+result['id_experience']).addClass("save");
+
+                $('#exp-icon2-'+result['id_experience']).removeClass("trash");
+                $('#exp-icon2-'+result['id_experience']).addClass("undo");
+            }
+        });
+    }
+    function saveExpInfo(id){
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/experienceById/"+id,
+            type : 'POST',
+            data: "label="+  $('#exp-input-'+id).val(),
+            success: function(result){
+                $('#exp'+result['id_experience']).html(result['label']);
+                $('#exp-icon1-'+result['id_experience']).removeClass("save");
+                $('#exp-icon1-'+result['id_experience']).addClass("edit");
+
+                $('#exp-icon2-'+result['id_experience']).removeClass("undo");
+                $('#exp-icon2-'+result['id_experience']).addClass("trash");
+            }
+        });
+    }
+    
 </script>

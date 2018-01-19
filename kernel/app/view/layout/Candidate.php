@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="ui secondary pointing menu">
-        <a href="<?php echo WEBROOT;?>candidate"class="<?php if($action == "index"){echo "active";}?> item">
+        <a href="<?php echo WEBROOT;?>candidate" class="<?php if($action == "index"){echo "active ";}?>item">
             Home
         </a>
         <a href="<?php echo WEBROOT;?>candidate/profile" class="<?php if($action == "profile"){echo "active";}?> item">
-            Mon profil j'ai besoin d'aide
+            Mon profil
         </a>
         <a class="item">
             Les offres

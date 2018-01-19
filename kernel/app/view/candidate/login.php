@@ -2,7 +2,7 @@
     <?php
 //    debug($GLOBALS);
     ?>
-    <form class="ui form" method="post">
+    <form class="ui form" method="post" action="<?php echo WEBROOT;?>candidate/login">
         <div class="field">
             <label>Nom d'utilisateur</label>
             <input name="username" value="<?php if($lastUsername){echo $lastUsername;}?>" type="text">
