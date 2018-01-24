@@ -25,28 +25,23 @@ class HrmController extends Controller{
             $this->render("home");
         }
 
-        public function createsm(){
+        public function create_sm(){
             if(!empty($_POST)){
                 if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['email']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['department']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
-                    echo "1";
                     $this->Sm->postToObj();
-                    echo "2";
                     $this->Sm->setPassword(sha1($_POST['password']));
-                    echo "3";
                     $this->Sm->create();
-                    echo "4";
                     $this->Sm->readAll();
-                    echo "5";
                 }
             }
-            $this->render(createsm);
+            $this->render(create_sm);
         }
 
-        public function checkoffer(){
+        public function check_offer(){
             echo "absolument aucune idee de quoi trouver ici en script";
         }
 
-        public function deletesm(){
+        public function delete_sm(){
             echo "Suppression des Chefs de Service";
         }
 
