@@ -1,3 +1,5 @@
+<br />
+<div class="ui container">
 <?php
 /**
  * Created by PhpStorm.
@@ -22,3 +24,11 @@
         <button type="submit" class="ui button">Valider creation</button> <p>Tous les champs sont requis</p>
     </form>
 </div>
+
+<a href="<?php echo WEBROOT; ?>hrm/home"> Retour accueil</a>
+</div>
+<br />
+<br />
+<br />
+<br />
+

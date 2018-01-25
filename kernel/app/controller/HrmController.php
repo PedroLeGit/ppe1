@@ -29,7 +29,8 @@ class HrmController extends Controller{
             if(!empty($_POST)){
                 if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['email']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['department']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
                     $tab = $this->Department->readAll();
-                    if($tab = true) {
+                    debug($tab);
+                    if(!empty($tab)) {
                         $this->Sm->postToObj();
                         $this->Sm->create();
                         $this->Sm->readAll();
@@ -54,11 +55,13 @@ class HrmController extends Controller{
                 if(!empty($_POST['label']) && !empty($_POST['staff'])){
                     $this->Department->postToObj();
                     $this->Department->create();
-                    $this->Department->readAll();
+                    $message = "Le service a bien ete cree";
                 }
             }
             $this->render(create_department);
         }
+
+
 
         public function logout(){
             unset($_SESSION);
