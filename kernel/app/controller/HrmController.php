@@ -28,10 +28,14 @@ class HrmController extends Controller{
         public function create_sm(){
             if(!empty($_POST)){
                 if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['email']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['department']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
-                    $this->Sm->postToObj();
-                    $this->Sm->setPassword(sha1($_POST['password']));
-                    $this->Sm->create();
-                    $this->Sm->readAll();
+                    $tab = $this->Department->readAll();
+                    if($tab = true) {
+                        $this->Sm->postToObj();
+                        $this->Sm->create();
+                        $this->Sm->readAll();
+                    }else{
+                        echo "Creation impossible. Vous ne pouvez pas creer de Chef de Service si aucun service n'existe dans la base";
+                    }
                 }
             }
             $this->render(create_sm);
