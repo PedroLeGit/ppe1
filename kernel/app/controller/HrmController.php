@@ -2,7 +2,7 @@
 require_once(LIB."Controller.php");
 class HrmController extends Controller{
     public function __construct(){
-        $this->models = array("Hrm", "Sm");
+        $this->models = array("Hrm", "Sm", "Department");
 
         parent::__construct();
     }
@@ -43,6 +43,17 @@ class HrmController extends Controller{
 
         public function delete_sm(){
             echo "Suppression des Chefs de Service";
+        }
+
+        public function create_department(){
+            if(!empty($_POST)){
+                if(!empty($_POST['label']) && !empty($_POST['staff'])){
+                    $this->Department->postToObj();
+                    $this->Department->create();
+                    $this->Department->readAll();
+                }
+            }
+            $this->render(create_department);
         }
 
         public function logout(){
