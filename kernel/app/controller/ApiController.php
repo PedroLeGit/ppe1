@@ -75,17 +75,26 @@ class ApiController extends Controller
             $this->render("json");
         }
     }
-    public function experienceById($id = null){
+    public function experienceById($id = null,$param = null){
         if($id){
-            if($this->Experience->read($id) && $this->Experience->getCandidate() == $_SESSION['id_candidate']) {
-                if($_POST['label']){
-                    $this->Experience->setLabel($_POST['label']);
-                    $this->Experience->update();
+            if($param){
+                if ($this->Experience->read($id) && $this->Experience->getCandidate() == $_SESSION['id_candidate']) {
+                    $this->Experience->delete($id);
+                    $res = true;
+                }else{
+                    $res = false;
                 }
-                $res = $this->Experience->getAll();
-            }else{
-                $res = array();
+            }else {
+                if ($this->Experience->read($id) && $this->Experience->getCandidate() == $_SESSION['id_candidate']) {
+                    if ($_POST['label']) {
+                        $this->Experience->setLabel($_POST['label']);
+                        $this->Experience->update();
+                    }
+                    $res = $this->Experience->getAll();
+                } else {
+                    $res = array();
 
+                }
             }
             $this->set(array("json" => json_encode($res)));
             $this->render("json");

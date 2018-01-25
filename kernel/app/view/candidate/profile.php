@@ -9,23 +9,17 @@
             </div>
             <div class="content">
                 Nom d'utilisateur : <span id="username"><?php echo $user['username'];?></span>
-            </div>
-            <div class="content">
+                <div class="ui divider"></div>
                 Nom : <span id="lastname"><?php echo $user['lastname'];?></span>
-            </div>
-            <div class="content">
+                <div class="ui divider"></div>
                 Prenom : <span id="firstname"><?php echo $user['firstname'];?></span>
-            </div>
-            <div class="content">
+                <div class="ui divider"></div>
                 Adresse mail : <span id="email"><?php echo $user['email'];?></span>
-            </div>
-            <div class="content">
+                <div class="ui divider"></div>
                 Adresse : <span id="address"><?php echo $user['address'];?></span>
-            </div>
-            <div class="content">
+                <div class="ui divider"></div>
                 Ville : <span id="city"><?php echo $user['city'];?></span>
-            </div>
-            <div class="content">
+                <div class="ui divider"></div>
                 Code postal : <span id="postalcode"><?php echo $user['postalcode'];?></span>
             </div>
             <div id="edit-user" class="ui bottom attached button">
@@ -39,11 +33,12 @@
                     Vos experiences
                 </div>
             </div>
+            <div class="content ui form">
             <?php
             foreach($experiences as $experience){
 
                 ?>
-                <div class="content ui form">
+
                     <span class="fields">
                         <span class="twelve wide field" id="exp<?php echo $experience['id_experience'];?>">
                             <?php echo $experience['label'];?>
@@ -55,10 +50,11 @@
                             <i id="exp-icon2-<?php echo $experience['id_experience'];?>" class="trash icon"></i>
                         </button>
                     </span>
-                </div>
+                <div class="ui divider"></div>
                 <?php
             }
             ?>
+            </div>
         </div>
 
 
@@ -70,16 +66,15 @@
                     Votre formation
                 </div>
             </div>
+            <div class="content">
             <?php
             foreach($formations as $formation){
-
-                ?>
-                <div class="content">
-                    <?php echo ucfirst($formation['label']);?>
-                </div>
+                echo ucfirst($formation['label']);?>
+                <div class="ui divider"></div>
                 <?php
             }
             ?>
+                </div>
             <div class="ui bottom attached button">
                 <i class="edit icon"></i>
                 Editer
@@ -93,16 +88,16 @@
                     Vos compétences
                 </div>
             </div>
+            <div class="content">
             <?php
             foreach($skills as $skill){
 
-            ?>
-            <div class="content">
-                <?php echo $levels[$skill['level']]." | ".ucwords($skill['skill']['label']);?>
-            </div>
+                 echo $levels[$skill['level']]." | ".ucwords($skill['skill']['label']);?>
+                <div class="ui divider"></div>
             <?php
             }
             ?>
+            </div>
             <div class="ui bottom attached button">
                 <i class="edit icon"></i>
                 Editer
@@ -165,6 +160,14 @@
     </div>
 </div>
 
+<div id="deleteExp" class="ui longer modal">
+    <div class="header">Supprimer l'experience "<span id="expLabel"></span>"</div>
+    <div class="actions">
+        <div id="delete-exp-confirm" class="ui approve button">Enregistrer</div>
+        <div class="ui cancel button">Retour</div>
+    </div>
+</div>
+
 <script>
     $("#edit-user").click(function () {
         getUserInfo();
@@ -221,10 +224,12 @@
         if($('#exp'+id).has("input").length != 0){
             cancelExpInfo(id);
         }else{
-
+            deleteExpModal(id);
         }
     });
-
+    $("#delete-exp-confirm").click(function () {
+        deleteExp();
+    });
     function cancelExpInfo(id){
         $.ajax({
             url: "<?php echo WEBROOT;?>api/experienceById/"+id,
@@ -266,5 +271,23 @@
             }
         });
     }
-    
+    function deleteExpModal(id) {
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/experienceById/"+id,
+            success: function(result){
+                $('#expLabel').html(result['label']);
+                $('#expLabel').data("idExp",result['id_experience'])
+                $('#deleteExp.ui.longer.modal').modal('show');
+            }
+        });
+    }
+    function deleteExp() {
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/experienceById/"+id+"/delete",
+            success: function(result){
+
+            }
+        });
+    }
+
 </script>
