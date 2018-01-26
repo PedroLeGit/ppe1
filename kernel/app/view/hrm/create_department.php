@@ -11,9 +11,12 @@ if(isset($error)){
 
     <!--formulaire-->
 <h1>Creer un Service</h1>
-    <a href="<?php echo WEBROOT;?> hrm/delete_department"><i style="font-size: 20px;" class="edit icon"><h3>Supprimer_un_Service</a></h3></i>
-<br />
-
+       <a href="<?php echo WEBROOT;?> hrm/delete_department">
+         <i style="font-size: 17px;" class="edit icon"></i>
+       <h4 style="display: inline;">Supprimer un Service</h4>
+   </a>
+    <br />
+    <br />
 <div class="ui container">
     <form action="" class="ui form" method="post">
         <div class="field">
@@ -34,4 +37,3 @@ if(isset($error)){
 <br />
 <br />
 <br />
-
