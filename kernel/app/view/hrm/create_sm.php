@@ -9,14 +9,12 @@
         ?></p>
 
     <div class="ui grid">
-        <div class="four wide column"></div>
-        <div class="four wide column"></div>
-        <div class="four wide column"></div>
-        <div class="four wide column"></div>
+        <div class="height wide column"><h1>Creer un Chef de Service</h1></div>
+        <div class="height wide column"><h1>Gerer les CDS</h1></div>
 
 
     <!--formulaire-->
-    <h1>Creer un Chef de service</h1>
+
     <a href="<?php echo WEBROOT;?> hrm/delete_department">
         <i style="font-size: 17px;" class="edit icon">
             <h4>Supprimer_un_Chef_De_Service</h4>
