@@ -26,7 +26,8 @@ class CandidateController extends Controller{
             if ($_POST['username'] && $_POST['password']) {
                 $tmp = $this->Candidate->readAll('"username" = \'' . htmlentities(strtolower($_POST['username'])) . '\' AND "password" = \'' . sha1($_POST['password']) . '\'');
                 if ($tmp) {
-                    $_SESSION['id_candidate'] = $tmp[0]['id_candidate'];
+                    unset($tmp[0]['password']);
+                    $_SESSION = $tmp[0];
                     header("Location: ".WEBROOT."candidate");
                 } else {
                     $data['lastUsername'] = $_POST['username'];

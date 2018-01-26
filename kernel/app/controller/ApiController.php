@@ -66,6 +66,11 @@ class ApiController extends Controller
     }
     public function experience($id = null){
         if($id){
+            if($_POST['label'] && id == $_SESSION['id_candidate']){
+                $this->Experience->setLabel($_POST['label']);
+                $this->Experience->setCandidate($id);
+                $this->Experience->create();
+            }
             if($tmp = $this->Experience->readAll("candidate = ".$id)) {
                 $res = $tmp;
             }else{

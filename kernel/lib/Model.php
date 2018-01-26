@@ -70,9 +70,9 @@ abstract class Model extends DB{
 				$varVals[":".$k] = $v;
             }
         }
-        if(isset($this->modified)){
-            $varKey[] = "modified";
-            $varVals[":modified"] = date('Y-m-d H:i:s');
+        if(isset($this->updated)){
+            $varKey[] = "updated";
+            $varVals[":updated"] = date('Y-m-d H:i:s');
         }
         if(is_array($id) && count($id) == count( $id)){
             $i = 0;

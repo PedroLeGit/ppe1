@@ -56,8 +56,8 @@ CREATE TABLE "hrm"(
     address varchar(100) NOT NULL,
     city varchar(50) NOT NULL,
     postalcode varchar(5) NOT NULL,
-    created TIMESTAMP WITHOUT TIMEZONE,
-    updated TIMESTAMP WITHOUT TIMEZONE,
+    created TIMESTAMP WITHOUT TIME ZONE,
+    updated TIMESTAMP WITHOUT TIME ZONE,
     CONSTRAINT pk_drh PRIMARY KEY(id_hrm)
 );
 
@@ -78,8 +78,8 @@ CREATE TABLE "sm"(
     address varchar(100) NOT NULL,
     city varchar(50) NOT NULL,
     postalcode varchar(5) NOT NULL,
-    created TIMESTAMP WITHOUT TIMEZONE,
-    updated TIMESTAMP WITHOUT TIMEZONE,
+    created TIMESTAMP WITHOUT TIME ZONE,
+    updated TIMESTAMP WITHOUT TIME ZONE,
     department int NOT NULL,
     CONSTRAINT pk_sm PRIMARY KEY(id_sm),
     CONSTRAINT fk_sm1 FOREIGN KEY (department) REFERENCES department(id_department)

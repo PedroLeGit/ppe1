@@ -7,7 +7,7 @@
                     Vos informations personnelles
                 </div>
             </div>
-            <div id="userList"class="content">
+            <div id="userList" class="content">
 
             </div>
             <div id="edit-user" class="ui bottom attached button">
@@ -23,6 +23,10 @@
             </div>
             <div id="experienceList" class="content ui form">
 
+            </div>
+            <div id="add-experience" class="ui bottom attached button">
+                <i class="add icon"></i>
+                Ajouter
             </div>
         </div>
 
@@ -136,35 +140,53 @@
         <div class="ui cancel button">Retour</div>
     </div>
 </div>
+<div id="add-exp-modal" class="ui longer modal">
+    <div class="header">Ajouter une experience </div>
+    <div class="actions">
+        <div class="ui form field">
+            <input type="text" id="addExpInput"/>
+        </div>
+        <div id="add-exp-confirm" class="ui approve button">Ajouter</div>
+        <div class="ui cancel button">Retour</div>
+    </div>
+</div>
 
 <script>
-    function bind(){
         $("#edit-user").click(function () {
             getUserInfo();
         });
         $("#edit-user-confirm").click(function () {
             saveUserInfo();
         });
-        $(".edit-exp").click(function () {
-            id = $(this).data('id');
-            if($('#exp'+id).has("input").length != 0){
-                saveExpInfo(id)
-            }else{
-                getExpInfo(id);
-            }
+        $("#add-experience").click(function () {
+            $('#add-exp-modal.ui.longer.modal').modal('show');
         });
-        $(".cancel-exp").click(function () {
-            id = $(this).data('id');
-            if($('#exp'+id).has("input").length != 0){
-                cancelExpInfo(id);
-            }else{
-                deleteExpModal(id);
-            }
+        $("#add-exp-confirm").click(function () {
+           addExp();
         });
+        function bindExp() {
+            $(".edit-exp").click(function () {
+                id = $(this).data('id');
+                if ($('#exp' + id).has("input").length != 0) {
+                    saveExpInfo(id)
+                } else {
+                    getExpInfo(id);
+                }
+            });
+            $(".cancel-exp").click(function () {
+                id = $(this).data('id');
+                if ($('#exp' + id).has("input").length != 0) {
+                    cancelExpInfo(id);
+                } else {
+                    deleteExpModal(id);
+                }
+            });
+        }
+        bindExp();
         $("#delete-exp-confirm").click(function () {
             deleteExp();
         });
-    }
+
 
     function showEditUser() {
         $('#user.ui.longer.modal').modal('show');
@@ -262,7 +284,7 @@
             url: "<?php echo WEBROOT;?>api/getExperiences",
             success: function(result){
                 $('#experienceList').html(result);
-                bind();
+                bindExp();
             }
         });
     }
@@ -271,7 +293,15 @@
             url: "<?php echo WEBROOT;?>api/getUserInfo",
             success: function(result){
                 $('#userList').html(result);
-                bind();
+            }
+        });
+    }
+    function addExp() {
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/experience/"<?php echo $_SESSION['id_candidate'];?>,
+            data: "label="+$("#addExpInput").val(),
+            success: function(result){
+                refreshExperience();
             }
         });
     }
