@@ -298,7 +298,7 @@
     }
     function addExp() {
         $.ajax({
-            url: "<?php echo WEBROOT;?>api/experience/"<?php echo $_SESSION['id_candidate'];?>,
+            url: "<?php echo WEBROOT;?>api/experience/<?php echo $_SESSION['id_candidate'];?>",
             data: "label="+$("#addExpInput").val(),
             success: function(result){
                 refreshExperience();
