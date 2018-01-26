@@ -1,13 +1,15 @@
+<!--affichage des erreurs/succes-->
 <br />
 <div class="ui container">
     <?php
     if(isset($error)){
     ?><br /><style type="text/css">p{color: red;}</style><p><?php echo $error;}
-
         if(isset($success)){
         ?><br /><style type="text/css">p{color: green;}</style><p><?php echo $success;}
         ?></p>
 
+
+    <!--formulaire-->
     <h1>Creer un Chef de service</h1>
 <br />
 

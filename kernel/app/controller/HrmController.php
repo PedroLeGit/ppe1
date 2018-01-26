@@ -58,11 +58,16 @@ class HrmController extends Controller{
                     $this->Department->create();
                     $this->set(array("success" => "Service cree avec succes"));
                 } else {
+                    //il y a peu de chances que cette erreur soit affichee un jour mais on ne sait jamais
                     $this->set(array("error" => "Formulaire incorrect"));
                 }
             }
-
             $this->render(create_department);
+        }
+
+        public function delete_department(){
+            $tab = $this->Department->readAll();
+            print_r($tab);
         }
 
 
