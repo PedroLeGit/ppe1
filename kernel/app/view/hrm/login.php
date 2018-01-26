@@ -4,10 +4,6 @@ if(isset($error)){
 ?>
 
 <div class="ui container">
-    <?php
-    //    debug($GLOBALS);
-    ?>
-
     <h2>Se connecter</h2>
     <form class="ui form" method="post" action="<?php echo WEBROOT; ?>hrm/index">
         <div class="field">

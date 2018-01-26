@@ -1,14 +1,14 @@
 <br />
 <div class="ui container">
 <?php
-/**
- * Created by PhpStorm.
- * User: pplaud
- * Date: 25/01/2018
- * Time: 08:24
- */
-?>
-<h1>Creer un Chef de service</h1>
+if(isset($error)){
+?><br /><style type="text/css">p{color: red;}</style><p><?php echo $error;}
+
+    if(isset($success)){
+    ?><br /><style type="text/css">p{color: green;}</style><p><?php echo $success;}
+    ?></p>
+
+<h1>Creer un Service</h1>
 <br />
 
 <div class="ui container">
@@ -21,10 +21,10 @@
             <label for="">Effectif</label>
             <input type="number" name="staff" required/>
         </div>
-        <button type="submit" class="ui button">Valider creation</button> <p>Tous les champs sont requis</p>
+        <button type="submit" class="ui button">Valider creation</button> Tous les champs sont requis
     </form>
 </div>
-
+<br />
 <a href="<?php echo WEBROOT; ?>hrm/home"> Retour accueil</a>
 </div>
 <br />

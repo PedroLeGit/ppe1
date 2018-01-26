@@ -17,7 +17,7 @@ class HrmController extends Controller{
                 }else{
                     $this->set(array("error" => "Identifiants non reconnus"));
                 }
-            }
+        }
         $this->render("login");
         }
 
@@ -29,35 +29,39 @@ class HrmController extends Controller{
             if(!empty($_POST)){
                 if(!empty($_POST['username']) && !empty($_POST['lastname']) && !empty($_POST['firstname']) && !empty($_POST['email']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['department']) && !empty($_POST['postalcode']) && !empty($_POST['password'])){
                     $tab = $this->Department->readAll();
-                    debug($tab);
                     if(!empty($tab)) {
                         $this->Sm->postToObj();
                         $this->Sm->create();
                         $this->Sm->readAll();
                     }else{
-                        echo "Creation impossible. Vous ne pouvez pas creer de Chef de Service si aucun service n'existe dans la base";
+                        $this->set(array("error" => "Creation impossible. Vous ne pouvez pas creer de Chef de Service si aucun Service n'existe."));
                     }
                 }
             }
             $this->render(create_sm);
         }
 
+    public function delete_sm(){
+        echo "Suppression des Chefs de Service";
+    }
+
         public function check_offer(){
             echo "absolument aucune idee de quoi trouver ici en script";
         }
 
-        public function delete_sm(){
-            echo "Suppression des Chefs de Service";
-        }
+
 
         public function create_department(){
-            if(!empty($_POST)){
-                if(!empty($_POST['label']) && !empty($_POST['staff'])){
+            if(!empty($_POST)) {
+                if (!empty($_POST['label']) && !empty($_POST['staff'])) {
                     $this->Department->postToObj();
                     $this->Department->create();
-                    $message = "Le service a bien ete cree";
+                    $this->set(array("success" => "Service cree avec succes"));
+                } else {
+                    $this->set(array("error" => "Formulaire incorrect"));
                 }
             }
+
             $this->render(create_department);
         }
 
