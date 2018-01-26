@@ -7,22 +7,26 @@ class HrmController extends Controller{
         parent::__construct();
     }
 
-
     public function index(){
         if (!empty($_POST)){
-            if(!empty($_POST['username']) && !empty($_POST['password'])){
-                $this->Hrm->readAll("username = 'pedro' password = 't'" );
-                    header('Location: ' . WEBROOT. 'hrm/home');
-                    exit();
-                }else{
-                    $this->set(array("error" => "Identifiants non reconnus"));
-                }
+            if(!empty($_POST['username']) && !empty($_POST['password']) AND !empty($tmp = $this->Hrm->readAll("username ='".$_POST['username']. "' AND password = '". sha1($_POST['password'])."' "))){
+               unset($tmp[0]['password']);
+               $_SESSION = $tmp[0];
+               header('Location: ' . WEBROOT. 'hrm/home');
+            }else{
+                $this->set(array("error" => "Identifiants non reconnus"));
+            }
         }
         $this->render("login");
         }
 
         public function home(){
+        if(!empty($_SESSION)) {
             $this->render("home");
+        }else{
+            //redirection vers login soit index par defaut
+            header("Location: ".WEBROOT."hrm/");
+        }
         }
 
         public function create_sm(){
@@ -33,6 +37,7 @@ class HrmController extends Controller{
                         $this->Sm->postToObj();
                         $this->Sm->create();
                         $this->Sm->readAll();
+                        $this->set(array("Success" => "Chef de Service cree avec succes"));
                     }else{
                         $this->set(array("error" => "Creation impossible. Vous ne pouvez pas creer de Chef de Service si aucun Service n'existe."));
                     }
@@ -42,14 +47,13 @@ class HrmController extends Controller{
         }
 
     public function delete_sm(){
-        echo "Suppression des Chefs de Service";
+        $tab = $this->Hrm->readAll();
+        print_r($tab);
     }
 
         public function check_offer(){
             echo "absolument aucune idee de quoi trouver ici en script";
         }
-
-
 
         public function create_department(){
             if(!empty($_POST)) {
@@ -69,8 +73,6 @@ class HrmController extends Controller{
             $tab = $this->Department->readAll();
             print_r($tab);
         }
-
-
 
         public function logout(){
             unset($_SESSION);
