@@ -7,20 +7,8 @@
                     Vos informations personnelles
                 </div>
             </div>
-            <div class="content">
-                Nom d'utilisateur : <span id="username"><?php echo $user['username'];?></span>
-                <div class="ui divider"></div>
-                Nom : <span id="lastname"><?php echo $user['lastname'];?></span>
-                <div class="ui divider"></div>
-                Prenom : <span id="firstname"><?php echo $user['firstname'];?></span>
-                <div class="ui divider"></div>
-                Adresse mail : <span id="email"><?php echo $user['email'];?></span>
-                <div class="ui divider"></div>
-                Adresse : <span id="address"><?php echo $user['address'];?></span>
-                <div class="ui divider"></div>
-                Ville : <span id="city"><?php echo $user['city'];?></span>
-                <div class="ui divider"></div>
-                Code postal : <span id="postalcode"><?php echo $user['postalcode'];?></span>
+            <div id="userList"class="content">
+
             </div>
             <div id="edit-user" class="ui bottom attached button">
                 <i class="edit icon"></i>
@@ -33,27 +21,8 @@
                     Vos experiences
                 </div>
             </div>
-            <div class="content ui form">
-            <?php
-            foreach($experiences as $experience){
+            <div id="experienceList" class="content ui form">
 
-                ?>
-
-                    <span class="fields">
-                        <span class="twelve wide field" id="exp<?php echo $experience['id_experience'];?>">
-                            <?php echo $experience['label'];?>
-                        </span>
-                        <button  data-id="<?php echo $experience['id_experience'];?>" class="two wide field edit-exp ui icon button" tabindex="0">
-                            <i id="exp-icon1-<?php echo $experience['id_experience'];?>" class="edit icon"></i>
-                        </button >
-                        <button  data-id="<?php echo $experience['id_experience'];?>" class="two wide field cancel-exp ui icon button" tabindex="0">
-                            <i id="exp-icon2-<?php echo $experience['id_experience'];?>" class="trash icon"></i>
-                        </button>
-                    </span>
-                <div class="ui divider"></div>
-                <?php
-            }
-            ?>
             </div>
         </div>
 
@@ -169,12 +138,34 @@
 </div>
 
 <script>
-    $("#edit-user").click(function () {
-        getUserInfo();
-    });
-    $("#edit-user-confirm").click(function () {
-        saveUserInfo();
-    });
+    function bind(){
+        $("#edit-user").click(function () {
+            getUserInfo();
+        });
+        $("#edit-user-confirm").click(function () {
+            saveUserInfo();
+        });
+        $(".edit-exp").click(function () {
+            id = $(this).data('id');
+            if($('#exp'+id).has("input").length != 0){
+                saveExpInfo(id)
+            }else{
+                getExpInfo(id);
+            }
+        });
+        $(".cancel-exp").click(function () {
+            id = $(this).data('id');
+            if($('#exp'+id).has("input").length != 0){
+                cancelExpInfo(id);
+            }else{
+                deleteExpModal(id);
+            }
+        });
+        $("#delete-exp-confirm").click(function () {
+            deleteExp();
+        });
+    }
+
     function showEditUser() {
         $('#user.ui.longer.modal').modal('show');
     }
@@ -202,34 +193,11 @@
             type : 'POST',
             data: 'lastname='+$('input[name=lastname]').val()+'&firstname='+$('input[name=firstname]').val()+'&email='+$('input[name=email]').val()+'&address='+$('input[name=address]').val()+'&city='+$('input[name=city]').val()+'&postalcode='+$('input[name=postalcode]').val(),
             success: function(result){
-                $("#username").html(result['username']);
-                $("#firstname").html(result['firstname']);
-                $("#lastname").html(result['lastname']);
-                $("#email").html(result['email']);
-                $("#address").html(result['address']);
-                $("#city").html(result['city']);
-                $("#postalcode").html(result['postalcode']);
+                refreshUser();
             }});
     }
-    $(".edit-exp").click(function () {
-        id = $(this).data('id');
-        if($('#exp'+id).has("input").length != 0){
-            saveExpInfo(id)
-        }else{
-            getExpInfo(id);
-        }
-    });
-    $(".cancel-exp").click(function () {
-        id = $(this).data('id');
-        if($('#exp'+id).has("input").length != 0){
-            cancelExpInfo(id);
-        }else{
-            deleteExpModal(id);
-        }
-    });
-    $("#delete-exp-confirm").click(function () {
-        deleteExp();
-    });
+
+
     function cancelExpInfo(id){
         $.ajax({
             url: "<?php echo WEBROOT;?>api/experienceById/"+id,
@@ -285,9 +253,28 @@
         $.ajax({
             url: "<?php echo WEBROOT;?>api/experienceById/"+id+"/delete",
             success: function(result){
-
+                refreshExperience();
             }
         });
     }
-
+    function refreshExperience(){
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/getExperiences",
+            success: function(result){
+                $('#experienceList').html(result);
+                bind();
+            }
+        });
+    }
+    function refreshUser(){
+        $.ajax({
+            url: "<?php echo WEBROOT;?>api/getUserInfo",
+            success: function(result){
+                $('#userList').html(result);
+                bind();
+            }
+        });
+    }
+    refreshExperience();
+    refreshUser();
 </script>

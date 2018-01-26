@@ -100,4 +100,48 @@ class ApiController extends Controller
             $this->render("json");
         }
     }
+    public function getExperiences(){
+        if($_SESSION['id_candidate'] && $this->Candidate->read($_SESSION['id_candidate'])){
+            if($tmp = $this->Experience->readAll("candidate = ".$_SESSION['id_candidate'])) {
+            foreach($tmp as $experience){
+
+                ?>
+
+                <span class="fields">
+                        <span class="twelve wide field" id="exp<?php echo $experience['id_experience'];?>">
+                            <?php echo $experience['label'];?>
+                        </span>
+                        <button  data-id="<?php echo $experience['id_experience'];?>" class="two wide field edit-exp ui icon button" tabindex="0">
+                            <i id="exp-icon1-<?php echo $experience['id_experience'];?>" class="edit icon"></i>
+                        </button >
+                        <button  data-id="<?php echo $experience['id_experience'];?>" class="two wide field cancel-exp ui icon button" tabindex="0">
+                            <i id="exp-icon2-<?php echo $experience['id_experience'];?>" class="trash icon"></i>
+                        </button>
+                    </span>
+                <div class="ui divider"></div>
+                <?php
+            }
+            }
+        }
+    }
+    public function getUserInfo(){
+        if($_SESSION['id_candidate'] && $this->Candidate->read($_SESSION['id_candidate'])){
+            $user = $this->Candidate->getAll();
+            ?>
+            Nom d'utilisateur : <span id="username"><?php echo $user['username'];?></span>
+            <div class="ui divider"></div>
+            Nom : <span id="lastname"><?php echo $user['lastname'];?></span>
+            <div class="ui divider"></div>
+            Prenom : <span id="firstname"><?php echo $user['firstname'];?></span>
+            <div class="ui divider"></div>
+            Adresse mail : <span id="email"><?php echo $user['email'];?></span>
+            <div class="ui divider"></div>
+            Adresse : <span id="address"><?php echo $user['address'];?></span>
+            <div class="ui divider"></div>
+            Ville : <span id="city"><?php echo $user['city'];?></span>
+            <div class="ui divider"></div>
+            Code postal : <span id="postalcode"><?php echo $user['postalcode'];?></span>
+<?php
+        }
+    }
 }
